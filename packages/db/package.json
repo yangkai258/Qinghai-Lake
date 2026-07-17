@@ -1,0 +1,32 @@
+{
+    "name":  "@data-tw/db",
+    "version":  "0.0.1",
+    "private":  true,
+    "type":  "module",
+    "main":  "./src/index.ts",
+    "exports":  {
+                    ".":  "./src/index.ts",
+                    "./schema":  "./src/schema/index.ts",
+                    "./client":  "./src/client.ts"
+                },
+    "scripts":  {
+                    "generate":  "drizzle-kit generate",
+                    "migrate":  "drizzle-kit migrate",
+                    "seed":  "tsx src/seed.ts",
+                    "studio":  "drizzle-kit studio",
+                    "test":  "vitest run",
+                    "setup":  "tsx scripts/setup.ts"
+                },
+    "dependencies":  {
+                         "drizzle-orm":  "^0.36.4",
+                         "postgres":  "^3.4.5",
+                         "dotenv":  "^16.4.5",
+                         "zod":  "^3.23.8"
+                     },
+    "devDependencies":  {
+                            "drizzle-kit":  "^0.28.1",
+                            "tsx":  "^4.19.2",
+                            "typescript":  "5.6.3",
+                            "vitest":  "^2.1.4"
+                        }
+}

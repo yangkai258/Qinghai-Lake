@@ -1,0 +1,17 @@
+{
+  "name": "@data-tw/ingestion",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/runner.ts",
+    "ingest:now": "tsx ../../packages/connectors/src/cli/run-now.ts"
+  },
+  "dependencies": {
+    "@data-tw/connectors": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

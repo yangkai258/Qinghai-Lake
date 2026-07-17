@@ -1,0 +1,36 @@
+@import "tailwindcss";
+:root {
+  --bg-0: #0b0e15;
+  --bg-1: #11151f;
+  --bg-2: #161b29;
+  --panel: rgba(20, 26, 41, 0.88);
+  --border: rgba(92, 122, 184, 0.28);
+  --ink: #e7ecf5;
+  --ink-dim: rgba(231,236,245,0.62);
+  --accent: #5aa6ff;
+  --accent-2: #5fe3c5;
+  --warn: #ffb547;
+  --bad: #ff5d6c;
+  --good: #2bd9a3;
+}
+html, body { margin:0; padding:0; background: var(--bg-0); color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+* { border-color: var(--border); }
+.btn { background: var(--accent); color: #0b0e15; font-weight: 600; padding: 8px 16px; border-radius: 8px; border: 0; cursor: pointer; }
+.btn:hover { filter: brightness(1.05); }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+.btn.danger { background: var(--bad); color: #fff; }
+.btn.sm { padding: 4px 10px; font-size: 13px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.input { background: var(--bg-2); color: var(--ink); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; width: 100%; font: inherit; }
+.input:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.tag { display: inline-flex; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag.good { background: rgba(43,217,163,0.15); color: var(--good); }
+.tag.warn { background: rgba(255,181,71,0.15); color: var(--warn); }
+.tag.bad { background: rgba(255,93,108,0.15); color: var(--bad); }
+.tag.muted { background: rgba(231,236,245,0.10); color: var(--ink-dim); }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th { color: var(--ink-dim); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); font-weight: 500; }
+.table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--ink); }
+.table tbody tr:hover { background: rgba(90,166,255,0.04); }
+.mono { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }

@@ -1,0 +1,22 @@
+{
+  "name": "@data-tw/feigua-worker",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/runner.ts",
+    "start": "tsx src/runner.ts"
+  },
+  "dependencies": {
+    "@data-tw/feigua-client": "workspace:*",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3",
+    "pino": "^9.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/node-cron": "^3.0.11",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

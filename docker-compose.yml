@@ -1,0 +1,87 @@
+version: "3.9"
+
+# 闂備礁鎲￠〃鍡椕哄Ο琛℃敠闁逞屽墴閺屾稖绠涚€ｎ亜顬夐梺?(macmini 濠殿喗甯楃粙鎺椻€﹂崼銉晣?闂?#  - postgres:     5432, 闂備礁缍婇弲鎻掝渻閹烘梻涓嶆繛鍡樻尭缁€宀勬煛瀹擃喖鍟伴崢?pgdata 闂?#  - admin:        3004, 闂備礁鎲￠懝鐐殽濮濆被浜归悗闈涙憸娑撳秹鏌ㄥ☉妯侯仾闁?(login + sources + snapshots + runs + screens preview)
+#  - dashboard:    3003, 6 闂?+ 闂備胶鍘ч〃搴㈢濠婂嫭鍙忛柍鍝勫€规慨婊勩亜閺冨洤袚閻忓繆鈧緞娑㈡晲閸℃瑥鈷岄梺?#  - superset:     8088, BI (濠殿喗甯楃粙鎺椻€﹂崼銉晣闁煎鍊栫€氬鏌ㄩ弴妤€浜鹃悷?admin/admin 闂?闂備焦鐪归崹濠氬窗瀹ュ棭娈介柛銉㈡櫆鐎氭岸姊洪崹顕呭剱闁?
+#  - ingestion:    -- (闂備浇顫夋禍浠嬪礉韫囨挾鏆?hosts 濠电偞鍨堕幐鎼佹晝閵夛附娅犳繝濠傜墕缁€澶愭煏婵炲灝濡块柣娑欐崌閺屻劌鈽夊Ο鑲╁姱婵炴潙鐨烽弲鐘茬暦濡も偓椤撳ジ宕ㄩ纰变紖 frontend 闂備胶顭堢换妤併仈閹间緡鏁?
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dashboard
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dashboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  admin:
+    build: { context: ., dockerfile: Dockerfile.admin }
+    depends_on:
+      postgres: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/dashboard
+      ADMIN_JWT_SECRET: change-me-in-prod
+      NODE_ENV: production
+      NEXT_PUBLIC_DASHBOARD_BASE: http://localhost:3003
+      NEXT_PUBLIC_SUPERSET_BASE: http://localhost:8088
+    ports:
+      - "3004:3004"
+
+  dashboard:
+    build: { context: ., dockerfile: Dockerfile.dashboard }
+    depends_on:
+      postgres: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/dashboard
+      NODE_ENV: production
+    ports:
+      - "3003:3003"
+
+  superset:
+    image: apache/superset:4.1.0
+    depends_on:
+      postgres: { condition: service_healthy }
+    environment:
+      SUPERSET_SECRET_KEY: change-me
+      ADMIN_USERNAME: admin
+      ADMIN_EMAIL: admin@local
+      ADMIN_PASSWORD: admin
+      SUPERSET_DATABASE_URI: postgresql://superset:superset_readonly_2026@postgres:5432/dashboard
+      # Bootstrap the read-only role once:
+      # psql -U postgres -d dashboard -f packages/db/setup-superset.sql
+    ports:
+      - "8088:8088"
+    # bootstrap admin user, init db, then run server. See README to skip if you have an existing admin.
+    command: >
+      sh -c "
+        superset db upgrade &&
+        superset init &&
+        superset run -p 8088 -h 0.0.0.0
+      "
+
+
+  feigua-worker:
+    build: { context: ., dockerfile: Dockerfile.feigua-worker }
+    depends_on:
+      postgres: { condition: service_healthy }
+    environment:
+      FEIGUA_COOKIE: 
+      FEIGUA_BASE_URL: 
+      FEIGUA_INBOX: /var/inbox/feigua
+      INGEST_CRON_FEIGUA: 
+      LOG_LEVEL: info
+    volumes:
+      - feigua-inbox:/var/inbox
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  feigua-inbox:
+  pgdata:

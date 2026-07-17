@@ -1,0 +1,41 @@
+{
+  "captured_at": "2026-07-10T09:00:00Z",
+  "week": "2026-W26",
+  "depts": [
+    "华北工厂", "新媒体学院", "财务部", "成都工厂", "天花工厂",
+    "技术应用服务部", "教务处", "渠道业务部", "数字平台部", "总经理办",
+    "装饰部", "法务部", "未识别部门"
+  ],
+  "accounts": [
+    { "name": "卓宝学生社",   "dept": "新媒体学院",     "person": "周三十",   "douyin_name": "卓宝学生社",     "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 23435, "fans_inc": -187, "works_total": 6,   "rate": 0.007 },
+    { "name": "卓宝王公子",   "dept": "财务部",         "person": "孙七",     "douyin_name": "卓宝王公子",     "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 2258,  "fans_inc": 871,  "works_total": 178, "rate": 0.012 },
+    { "name": "卓宝西南分公司", "dept": "华北工厂",       "person": "李十二",   "douyin_name": "卓宝西南",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 40294, "fans_inc": 314,  "works_total": 53,  "rate": 0.009 },
+    { "name": "成都卓宝",     "dept": "成都工厂",       "person": "刘序五",   "douyin_name": "成都卓宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 34824, "fans_inc": 2832, "works_total": 80,  "rate": 0.011 },
+    { "name": "卓宝科技-Cc",  "dept": "技术应用服务部",  "person": "钱六",     "douyin_name": "卓宝科技",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 21328, "fans_inc": 985,  "works_total": 124, "rate": 0.009 },
+    { "name": "卓宝学院",     "dept": "教务处",         "person": "刘十四",   "douyin_name": "卓宝学院",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 30806, "fans_inc": -605, "works_total": 75,  "rate": 0.000 },
+    { "name": "沈阳工厂",     "dept": "华北工厂",       "person": "李序三",   "douyin_name": "沈阳卓宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 2546,  "fans_inc": 4689, "works_total": 33,  "rate": 0.000 },
+    { "name": "卓宝科技",     "dept": "华北工厂",       "person": "赵五",     "douyin_name": "卓宝科技官方",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 11298, "fans_inc": 3714, "works_total": 160, "rate": 0.010 },
+    { "name": "周宁卓宝防水", "dept": "渠道业务部",     "person": "刘四",     "douyin_name": "周宁卓宝防水",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 8962,  "fans_inc": 3799, "works_total": 50,  "rate": 0.013 },
+    { "name": "中国卓宝",     "dept": "总经理办",       "person": "周十九",   "douyin_name": "中国卓宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 40861, "fans_inc": 50,   "works_total": 180, "rate": 0.009 },
+    { "name": "卓宝云计算",   "dept": "数字平台部",     "person": "孙房九",   "douyin_name": "卓宝云",         "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 28633, "fans_inc": 2400, "works_total": 104, "rate": 0.014 },
+    { "name": "宋宝传承",     "dept": "法务部",         "person": "赵十六",   "douyin_name": "宋宝传承",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 39035, "fans_inc": 1106, "works_total": 170, "rate": 0.018 },
+    { "name": "卓宝装饰",     "dept": "装饰部",         "person": "王序二",   "douyin_name": "卓宝装饰",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 11542, "fans_inc": 1117, "works_total": 17,  "rate": 0.000 },
+    { "name": "天花草宝旗舰店","dept": "未识别部门",    "person": "王三",     "douyin_name": "天花草宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 12695, "fans_inc": 1374, "works_total": 176, "rate": 0.000 },
+    { "name": "天花工厂小宝", "dept": "天花工厂",       "person": "张十三",   "douyin_name": "卓宝天花工厂",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 36603, "fans_inc": 4312, "works_total": 172, "rate": 0.000 },
+    { "name": "天花卓宝工程", "dept": "天花工厂",       "person": "李十二",   "douyin_name": "工程卓宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 18430, "fans_inc": 2210, "works_total": 95,  "rate": 0.011 },
+    { "name": "华北卓宝学院", "dept": "新媒体学院",     "person": "赵十五",   "douyin_name": "华北卓宝学院",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 9412,  "fans_inc": 1220, "works_total": 41,  "rate": 0.014 },
+    { "name": "广州卓宝",     "dept": "渠道业务部",     "person": "孙七七",   "douyin_name": "广州卓宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 7210,  "fans_inc": 632,  "works_total": 22,  "rate": 0.009 },
+    { "name": "云南分公司",   "dept": "渠道业务部",     "person": "赵二三",   "douyin_name": "卓宝云南",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 5410,  "fans_inc": 290,  "works_total": 28,  "rate": 0.005 },
+    { "name": "卓宝设计师",   "dept": "装饰部",         "person": "王七",     "douyin_name": "卓宝设计师",     "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 6320,  "fans_inc": 410,  "works_total": 22,  "rate": 0.007 },
+    { "name": "卓宝全员",     "dept": "总经理办",       "person": "周十",     "douyin_name": "卓宝全员",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 4720,  "fans_inc": 110,  "works_total": 21,  "rate": 0.005 },
+    { "name": "卓宝十年以后", "dept": "总经理办",       "person": "孙九",     "douyin_name": "十年以后卓宝",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 18040, "fans_inc": 1900, "works_total": 56,  "rate": 0.013 },
+    { "name": "天花工厂小宝2","dept": "天花工厂",       "person": "李十四",   "douyin_name": "卓宝天花工厂2",  "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 2103,  "fans_inc": 80,   "works_total": 12,  "rate": 0.004 },
+    { "name": "卓宝工程师",   "dept": "技术应用服务部",  "person": "刘一",     "douyin_name": "卓宝工程师",     "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 3045,  "fans_inc": 200,  "works_total": 19,  "rate": 0.007 },
+    { "name": "华北工厂",     "dept": "华北工厂",       "person": "李序六",   "douyin_name": "华北卓宝官方",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 5210,  "fans_inc": 332,  "works_total": 28,  "rate": 0.008 },
+    { "name": "周宁小宝",     "dept": "渠道业务部",     "person": "王五",     "douyin_name": "周宁小宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 1820,  "fans_inc": 91,   "works_total": 14,  "rate": 0.005 },
+    { "name": "卓宝内训",     "dept": "教务处",         "person": "张三",     "douyin_name": "卓宝内训",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 920,   "fans_inc": 32,   "works_total": 5,   "rate": 0.004 },
+    { "name": "卓宝学院-admin","dept": "教务处",        "person": "李一",     "douyin_name": "卓宝学院后台",   "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 450,   "fans_inc": 10,   "works_total": 3,   "rate": 0.002 },
+    { "name": "上海卓宝",     "dept": "数字平台部",     "person": "王七七",   "douyin_name": "上海卓宝",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 6220,  "fans_inc": 420,  "works_total": 31,  "rate": 0.011 },
+    { "name": "卓宝客户",     "dept": "渠道业务部",     "person": "赵六",     "douyin_name": "卓宝客户",       "status": "warn", "plays_inc": 0, "like_count": 0, "fans_total": 3300,  "fans_inc": 88,   "works_total": 18,  "rate": 0.005 }
+  ]
+}

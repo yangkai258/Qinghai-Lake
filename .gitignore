@@ -1,0 +1,50 @@
+﻿# Node / pnpm
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+*.tsbuildinfo
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Inbox (feigua writes here)
+inbox/
+
+# Runtime
+pids/
+
+# Drizzle / pg data
+drizzle/
+
+# Misc
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Generated / tmp
+*.tmp
+.cache/
+# Dev/debug scratch (do not commit)
+adminhash.txt
+newhash.txt
+temphash.txt
+check-hash.*
+fix-pw.ps1
+update-pw.ps1
+updpw.ps1
+updpw2.ps1
+apps/admin/reset-pw.ts

@@ -1,0 +1,26 @@
+{
+  "name": "data-tw",
+  "private": true,
+  "version": "0.0.1",
+  "description": "data-tw 璺?閹舵牠鐓舵担婊勫灛婢堆冪潌 + 閺佺増宓佹稉顓炲酱 (monorepo)",
+  "scripts": {
+    "db:generate":  "pnpm --filter @data-tw/db generate",
+    "db:migrate":   "pnpm --filter @data-tw/db migrate",
+    "db:seed":      "pnpm --filter @data-tw/db seed",
+    "db:setup":     "pnpm --filter @data-tw/db setup",
+    "db:studio":    "pnpm --filter @data-tw/db studio",
+    "ingest:start": "pnpm --filter @data-tw/ingestion start",
+    "ingest:now":   "pnpm --filter @data-tw/ingestion ingest:now",
+    "dashboard:build":  "pnpm --filter @data-tw/dashboard build",
+    "feigua:start":     "pnpm --filter @data-tw/feigua-worker start",
+    "dashboard:start":  "pnpm --filter @data-tw/dashboard start",
+    "dashboard:dev":    "pnpm --filter @data-tw/dashboard dev",
+    "admin:build":      "pnpm --filter @data-tw/admin build",
+    "admin:start":      "pnpm --filter @data-tw/admin start",
+    "admin:dev":        "pnpm --filter @data-tw/admin dev",
+    "stop:all":         "cmd /c scripts\\stop-all.cmd"
+  },
+  "devDependencies": { "typescript": "5.6.3" },
+  "packageManager": "pnpm@11.7.0",
+  "engines": { "node": ">=20" }
+}

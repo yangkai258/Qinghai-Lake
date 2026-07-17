@@ -1,0 +1,34 @@
+{
+    "name":  "@data-tw/admin",
+    "version":  "0.0.1",
+    "private":  true,
+    "scripts":  {
+                    "dev":  "next dev -p 3004",
+                    "start":  "next start -p 3004",
+                    "build":  "next build"
+                },
+    "dependencies":  {
+                         "@data-tw/db":  "workspace:*",
+                         "bcryptjs":  "^2.4.3",
+                         "drizzle-orm":  "^0.36.4",
+                         "jose":  "^5.9.6",
+                         "next":  "15.5.0",
+                         "postgres":  "^3.4.5",
+                         "react":  "19.0.0",
+                         "react-dom":  "19.0.0",
+                         "zod":  "^3.23.8",
+                         "@data-tw/connectors":  "workspace:*",
+                         "pino":  "^9.5.0"
+                     },
+    "devDependencies":  {
+                            "@tailwindcss/postcss":  "^4.0.0",
+                            "@types/bcryptjs":  "^2.4.6",
+                            "@types/node":  "^22.9.0",
+                            "@types/react":  "19.0.0",
+                            "@types/react-dom":  "19.0.0",
+                            "postcss":  "^8.4.49",
+                            "tailwindcss":  "^4.0.0",
+                            "tsx":  "^4.19.2",
+                            "typescript":  "^5.6.3"
+                        }
+}
