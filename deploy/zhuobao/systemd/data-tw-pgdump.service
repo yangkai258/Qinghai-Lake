@@ -1,0 +1,9 @@
+﻿[Unit]
+Description=pg_dump snapshot for /var/lib/data-tw/backups
+
+[Service]
+Type=oneshot
+User=zhuobao
+ExecStart=/usr/local/bin/pgdump-nightly.sh
+Nice=10
+IOSchedulingClass=best-effort

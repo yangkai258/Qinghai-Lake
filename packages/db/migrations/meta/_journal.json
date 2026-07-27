@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "7",
   "dialect": "postgresql",
   "entries": [
@@ -7,6 +7,13 @@
       "version": "7",
       "when": 1783938682122,
       "tag": "0000_bent_bloodstorm",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1784000000000,
+      "tag": "0002_external_ingest_token",
       "breakpoints": true
     }
   ]

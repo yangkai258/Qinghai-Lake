@@ -1,0 +1,19 @@
+﻿[Unit]
+Description=data-tw admin (Next.js, port 3004)
+After=network-online.target data-tw-pg-ready.path
+
+[Service]
+Type=simple
+User=zhuobao
+WorkingDirectory=/opt/data-tw/apps/admin
+EnvironmentFile=/opt/data-tw/.env
+ExecStart=/usr/bin/pnpm start
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/data-tw
+
+[Install]
+WantedBy=multi-user.target

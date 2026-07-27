@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "@data-tw/feigua-worker",
   "version": "0.0.1",
   "private": true,
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@data-tw/feigua-client": "workspace:*",
+    "@data-tw/collector-sdk": "workspace:*",
     "dotenv": "^16.4.5",
     "node-cron": "^3.0.3",
     "pino": "^9.5.0"

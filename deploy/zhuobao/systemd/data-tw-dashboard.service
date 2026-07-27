@@ -1,0 +1,17 @@
+﻿[Unit]
+Description=data-tw dashboard (Next.js, port 3003)
+After=network-online.target
+
+[Service]
+Type=simple
+User=zhuobao
+WorkingDirectory=/opt/data-tw/apps/dashboard
+EnvironmentFile=/opt/data-tw/.env
+ExecStart=/usr/bin/pnpm start
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

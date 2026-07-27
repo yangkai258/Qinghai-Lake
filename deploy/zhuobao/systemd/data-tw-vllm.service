@@ -1,0 +1,22 @@
+﻿[Unit]
+Description=vLLM server (CUDA, tensor-parallel = 2 x RTX 3090)
+After=network-online.target nvidia-persistenced.service
+
+[Service]
+Type=simple
+User=zhuobao
+WorkingDirectory=/opt/data-tw
+Environment=CUDA_VISIBLE_DEVICES=0,1
+Environment=VLLM_CACHE_ROOT=/var/lib/data-tw/llm-models
+ExecStart=/home/zhuobao/.local/bin/python -m vllm.entrypoints.openai.api_server \
+  --model /var/lib/data-tw/llm-models/Qwen2.5-Coder-32B-Instruct-AWQ \
+  --tensor-parallel-size 2 \
+  --gpu-memory-utilization 0.9 \
+  --host 127.0.0.1 --port 7000
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

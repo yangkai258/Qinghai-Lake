@@ -1,0 +1,17 @@
+﻿[Unit]
+Description=data-tw LLM gateway (FastAPI, port 7010)
+After=network-online.target data-tw-vllm.service
+
+[Service]
+Type=simple
+User=zhuobao
+WorkingDirectory=/opt/data-tw
+EnvironmentFile=/opt/data-tw/.env
+ExecStart=/home/zhuobao/.local/bin/python -m packages.llm_gateway.server --host 127.0.0.1 --port 7010
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target
