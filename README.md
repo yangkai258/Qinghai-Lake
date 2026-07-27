@@ -123,3 +123,7 @@ python3 scripts/superset-bootstrap.py
   `POST /api/ingest-external/<id>` 写入,从不直连 PostgreSQL。
 - 详细请阅读 `docs/ARCHITECTURE.md` 和 `docs/COLLECTOR_NEIGHBOR.md`;
   运维侧看 `docs/OPERATIONS.md`;服务器部署看 `deploy/zhuobao/SYSTEMD.md`。
+## 完整说明书
+
+新同事请先读 **`docs/MANUAL.md`** — 包含架构 / 数据模型 / 六屏 / admin / 采集 / Superset / 告警 / 部署 / 备份 / 常见问题 14 章。
+本页只放仓库简述和指针。
