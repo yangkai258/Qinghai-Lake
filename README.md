@@ -1,120 +1,134 @@
-﻿# data-tw 路 鍗撳疂鏁版嵁涓彴
+﻿# data-tw 卓宝数据中台
 
-瀹屾暣鍚庡彴 + 鏁版嵁澶у睆 + BI + 鍛婅. PostgreSQL 17 + Drizzle + Next.js 15 + Superset + react-bits.
+完整后台 + 数据大屏 + BI + 告警。PostgreSQL 17 + Drizzle + Next.js 15 + Superset + react-bits。
 
-## 鍏ㄦ櫙
+## 全景
 
 ```
-[feigua-crawler] (cron, hostname only)  鈫?/var/inbox/feigua/*.json
-                                              鈫?             [apps/feigua-worker]  (hourly synthetic or real fetch with .env cookie)
-                                              鈫?                                       inbox JSON files
-                                              鈫?             [apps/ingestion] (node-cron scheduler)
-                                              鈫?             loadSnapshots() 鈫?PG account_snapshots + ingestion_runs
-                                              鈫?                          v_douyin_account_latest (view)
-                          鈫?          鈫?            鈫?        [apps/dashboard]     [apps/admin]     [Superset]
-        6 TV screens (16:9)   sources / facts /  6 charts + 1 dashboard
-        auto-rotator home     alerts / ingest   auto-bootstrapped by
-        map + react-bits      control           scripts/superset-bootstrap.py
-                              reseed mock + UI  click to fire ingest
+[feigua-crawler]   ->   /var/inbox/feigua/*.json
+                          ->   [apps/feigua-worker]  (hourly, real feigua fetch or synthetic)
+                          ->   inbox JSON files
+                          ->   [apps/ingestion]     (node-cron scheduler)
+                          ->   loadSnapshots() -> PG account_snapshots + ingestion_runs
+                          ->   v_douyin_account_latest (view)
+
+                                              ->   [apps/dashboard]    [apps/admin]      [Superset]
+                6 TV screens (16:9)        sources / facts /        6 charts + 1 dashboard
+                auto-rotator home          alerts / ingest         auto-bootstrapped
+                map + react-bits          control                 scripts/superset-bootstrap.py
+                                            reseed mock + UI        click to fire ingest
 ```
 
-## 杩涚▼琛?
-| 鏈嶅姟                       | 绔彛 | 瑙掕壊                                          |
-|----------------------------|------|-----------------------------------------------|
-| apps/admin                 | 3004 | 鍚庡彴 login / sources / facts / alerts / 閲嶇亴 mock / Superset iframe |
-| apps/dashboard             | 3003 | 6 TV 灞?(1920x1080 lock) + 鑷姩杞挱棣栭〉              |
-| apps/ingestion             | 鈥?   | cron runner 璋?connectors 鍐?PG                  |
-| apps/feigua-worker         | 鈥?   | 姣忓皬鏃舵媺椋炵摐 (cookie 绉佹湁) 鈫?鍐?inbox               |
-| Superset                   | 8088 | BI / 鎶ヨ〃                                     |
-| PostgreSQL 17              | 5432 | 4 寮犺〃 + 瑙嗗浘 + superset 鍙瑙掕壊 + alert 寮曟搸      |
+## 服务清单
 
-## 涓€娆℃€у畨瑁?
+| 服务                  | 端口 | 作用                                                         |
+|----------------------|-----:|--------------------------------------------------------------|
+| apps/admin           | 3004 | 后台登录 / source 配置 / 采集 run / 告警规则 / Superset iframe |
+| apps/dashboard       | 3003 | 6 个电视大屏 (1920x1080 锁屏) + 首页自动轮播                |
+| apps/ingestion       |   -- | cron runner:调 connectors,写 PostgreSQL                      |
+| apps/feigua-worker   |   -- | 每小时拉飞瓜 (cookie 私有) -> 写 inbox 或 HTTP 推送          |
+| Superset             | 8088 | BI / 报表                                                    |
+| PostgreSQL 17        | 5432 | 4 张表 + 视图 + Superset 只读账号 + alert 引擎              |
+
+## 一次性安装
+
 ```bash
 pnpm install
-psql -U postgres -d dashboard -f packages/db/migrations/0000_initial/migration.sql
-psql -U postgres -d dashboard -f packages/db/migrations/0001_alert_rules_and_users/migration.sql
-psql -U postgres -d dashboard -f packages/db/seed-via-sql.sql
+pnpm db:setup                                       # 应用所有 migrations 0000..0002
+pnpm db:seed                                        # 灌入 30 个 mock 抖音账号
 psql -U postgres -d dashboard -f packages/db/setup-superset.sql
 ```
 
-## 璧峰紑鍙戞爤 (涓€寮€ 4 缁堢)
+## 开发启动 (一开 4 终端)
 
 ```bash
-# T1: dashboard (鍓嶅彴 + 澶у睆)
-pnpm dashboard:dev     # 鈫?http://localhost:3003
+# T1: dashboard (前台 + 大屏)
+pnpm dashboard:dev    # -> http://localhost:3003
 
-# T2: admin (鍚庡彴)
-pnpm admin:dev         # 鈫?http://localhost:3004; 棣栨 setup wizard
+# T2: admin (后台)
+pnpm admin:dev        # -> http://localhost:3004 (首次走 setup wizard)
 
 # T3: ingestion
-pnpm ingest:start      # cron runner
+pnpm ingest:start     # cron runner
 
 # T4: feigua-worker
-pnpm feigua:start      # 姣忓皬鏃舵媺椋炵摐; cookie 璧?.env
+pnpm feigua:start     # 每小时拉飞瓜; cookie 写 .env
 
 # Superset
 docker compose up -d superset
-python3 scripts/superset-bootstrap.py   # 寤?dataset + 6 charts + 1 dashboard
-```
-
-## Superset 6 澶у睆
-
-`scripts/superset-bootstrap.py` 鑷姩寤?
-
-- 鏁版嵁搴? `data-tw` (杩炲彧璇昏处鍙?
-- Dataset: `v_douyin_account_latest`
-- 6 charts:
-  - 楂樺眰鍐崇瓥灞?(big_number_total)
-  - 杩愯惀浣滄垬灞?(table)
-  - 鍐呭鐢熶骇灞?(bar by dept)
-  - 鍏ㄩ噺璐﹀彿灞?(table)
-  - 閮ㄩ棬瓒嬪娍灞?(stacked bar)
-  - 鍦板煙鍒嗗竷灞?(pivot_table)
-- 1 dashboard: `data-tw-screens` (slug `data-tw-screens`)
-
-admin 鍚庡彴 鈫?鏁版嵁澶у睆棰勮 鈫?Superset 澶у睆涓诲尯 + fallback 鑰?dashboard 7 灞忋€?
-## 鍛婅寮曟搸
-
-`packages/connectors/src/alerts/evaluator.ts` 姣忓垎閽?cron 璇勪及锛屽懡涓啓 `alerts` 琛?(dedupe by rule_id unresolved)銆?
-瑙勫垯 kind:
-- `dead_count_ge`    鍋滄挱璐﹀彿鏁?鈮?threshold
-- `warn_count_ge`    棰勮璐﹀彿鏁?鈮?threshold
-- `rate_avg_lt`      骞冲潎瀹屾挱鐜?< threshold
-- `fans_inc_total_lt`SUM 鏂板绮変笣 < threshold
-- `dead_pct_ge`      鍋滄挱鍗犳瘮 鈮?threshold (0..1)
-
-鍚庡彴 鈫?鍛婅 鈫?銆屾彃鍏?3 鏉￠粯璁よ鍒欍€?銆岀珛鍗宠瘎浼般€嶃€侱ashboard 椤舵爮鍙充笂绾?tag 闂€?
-## 瑙嗚 (dashboard)
-
-娣辨捣鍐涜摑 (`#050b18`) 閿?1920x1080, body cursor:none. react-bits 缁勪欢鍦?`apps/dashboard/src/components/rb/`:
-- Aurora        鈥?鍏ㄥ睆寰勫悜娓愬彉娴佸厜
-- Threads       鈥?SVG 绮掑瓙绾?- MagnetLines   鈥?Panel 瑁呴グ瀵硅缃戞牸
-- CountUp       鈥?KPI 鏁板瓧婊氬姩
-- ElectricBorder/GradientText/ShinyText/BlurText/GlareHover 鈥?澶囩敤
-
-## Performance / Cache
-
-`apps/dashboard/src/lib/adapter.ts` 鐢?Next.js `unstable_cache` 鎶?PG view 缁撴灉缂撳瓨 30s, 6 灞忓叡浜竴娆℃煡璇€?
-## 閮ㄧ讲 (macmini 鍏ㄦ爤)
-
-```bash
-docker compose up -d                       # postgres + admin + dashboard + superset + feigua-worker
-psql -U postgres -d dashboard -f packages/db/migrations/0000_initial/migration.sql
-psql -U postgres -d dashboard -f packages/db/migrations/0001_alert_rules_and_users/migration.sql
 python3 scripts/superset-bootstrap.py
 ```
 
-7 涓嵎 + 5 涓鍣?+ pgdata 鍗锋寔涔呭寲. 鑰?Windows 娴忚鍣ㄨ闂?
-- http://&lt;macmini-ip&gt;:3004  (鍚庡彴)
-- http://&lt;macmini-ip&gt;:3003  (澶у睆)
-- http://&lt;macmini-ip&gt;:8088  (BI)
+## Superset 6 大屏
 
-## 缂栫爜鍧?
-- PowerShell `Set-Content -Encoding UTF8` 浼氭妸涓枃鍙??????. 鐢?`UTF8Encoding($false)` 鐨?`[IO.File]::WriteAllText`.
-- 涓嶈鍦?5 灞忛噷鍔犳悳绱?鎺掑簭/鍒嗛〉 (TV 涓嶈兘鐐?.
-- KPI 姘歌繙 6 涓?tile, 涓嶅鐢?鈥?濉厖.
-- 椋炵摐 cookie 鍙湪 .env, 涓嶅仛 UI.
-- sandbox 鎷?node 璺? 浣犳湰鏈?`pnpm install` 鎵嶈兘鐪熼獙璇?build.
+`scripts/superset-bootstrap.py` 自动建:
+
+- 数据库:data-tw (连只读账号)
+- Dataset:`v_douyin_account_latest`
+- 6 charts:
+  - 高层决策屏 (big_number_total)
+  - 运营作战屏 (table)
+  - 内容生产屏 (bar by dept)
+  - 全量账号屏 (table)
+  - 部门趋势屏 (stacked bar)
+  - 区域分布屏 (pivot_table)
+- 1 dashboard:`data-tw-screens`
+
+后台 -> 数据大屏预览 -> Superset 大屏主区 + fallback 到 dashboard 6 屏。
+
+## 告警引擎
+
+`packages/connectors/src/alerts/evaluator.ts` 每分钟 cron 评估,命中的写 `alerts` 表 (dedupe by rule_id unresolved)。
+
+规则 kind:
+- `dead_count_ge`     停播账号数 >= threshold
+- `warn_count_ge`     预警账号数 >= threshold
+- `rate_avg_lt`       平均完播率 < threshold
+- `fans_inc_total_lt` SUM 新增粉丝 < threshold
+- `dead_pct_ge`       停播占比 >= threshold (0..1)
+
+后台 -> 告警 -> 一次性插入 3 条默认规则。立刻评估。Dashboard 顶栏右上角 tag 闪。
+
+## 视觉 (dashboard)
+
+深邃藏蓝 (`#050b18`) 锁 1920x1080,body cursor:none。react-bits 组件在 `apps/dashboard/src/components/rb/`:
+- Aurora          -- 全屏径向渐变流光
+- Threads         -- SVG 粒子线
+- MagnetLines     -- Panel 装饰对角网格
+- CountUp         -- KPI 数字滚动
+- ElectricBorder / GradientText / ShinyText / BlurText / GlareHover -- 备用
+
+## Performance / Cache
+
+`apps/dashboard/src/lib/adapter.ts` 用 Next.js `unstable_cache` 把 PG view 结果缓存 30s,6 屏共享一次查询。
+
+## 部署 (macmini 全栈)
+
+```bash
+docker compose up -d          # postgres + admin + dashboard + superset + feigua-worker
+pnpm db:setup
+python3 scripts/superset-bootstrap.py
+```
+
+7 个卷 + 5 个容器 + pgdata 卷持久化。给 Windows 浏览器访问:
+- http://<macmini-ip>:3004  (后台)
+- http://<macmini-ip>:3003  (大屏)
+- http://<macmini-ip>:8088  (BI)
+
+## 编码注意
+
+如果用 PowerShell 编辑本仓库里的 `.md` 文件,**不要**用 `Set-Content -Encoding UTF8`,在某些 Windows 版本上会破坏中文。改用:
+
+```powershell
+[IO.File]::WriteAllText(
+  $path,
+  $content,
+  [Text.UTF8Encoding]::new($false)
+)
+```
+
+或者直接用 Visual Studio Code / Notepad++ 等明确支持 UTF-8 无 BOM 的编辑器。
+
 ## 职责边界
 
 - 数据中台 = admin / dashboard / PostgreSQL / Superset / 本地 LLM,放在
@@ -123,7 +137,8 @@ python3 scripts/superset-bootstrap.py
   `POST /api/ingest-external/<id>` 写入,从不直连 PostgreSQL。
 - 详细请阅读 `docs/ARCHITECTURE.md` 和 `docs/COLLECTOR_NEIGHBOR.md`;
   运维侧看 `docs/OPERATIONS.md`;服务器部署看 `deploy/zhuobao/SYSTEMD.md`。
+
 ## 完整说明书
 
-新同事请先读 **`docs/MANUAL.md`** — 包含架构 / 数据模型 / 六屏 / admin / 采集 / Superset / 告警 / 部署 / 备份 / 常见问题 14 章。
+新同事请先读 **`docs/MANUAL.md`** —— 包含架构 / 数据模型 / 六屏 / admin / 采集 / Superset / 告警 / 部署 / 备份 / 常见问题 14 章。
 本页只放仓库简述和指针。
